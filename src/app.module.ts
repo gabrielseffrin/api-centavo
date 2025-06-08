@@ -6,9 +6,10 @@ import { CoreModule } from './core/core.module';
 import { ExpenseModule } from './expense/expense.module';
 import { ErrorsModule } from './errors/errors.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [SharedModule, CoreModule, ExpenseModule, ErrorsModule, PrismaModule],
+  imports: [SharedModule, CoreModule, ExpenseModule, ErrorsModule, PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
