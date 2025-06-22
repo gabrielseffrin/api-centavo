@@ -32,8 +32,8 @@ export class ExpenseService {
     if (filter) {
       where.name = {
         contains: filter,
-        mode: 'insensitive',
-      };
+        mode: 'insensitive', // OK com Prisma 6+
+      } as Prisma.StringFilter;
     }
     
     // O resto da lógica de paginação permanece igual...

@@ -29,16 +29,17 @@ export class ExpenseController {
   @HttpCode(201)
   async createExpense(@Body() createExpenseDto: CreateExpenseDto, @Req() req: Request) {
     // Extrai o userId do payload do JWT (populado pelo AuthGuard)
-    const userId = req.user['id']; 
+    const userId = (req.user as { id: number }).id; 
     return this.expenseService.createExpense(createExpenseDto, userId);
   }
 
   @Get()
+  @UseGuards(AuthGuard('jwt')) // Protege a rota de listagem de despesas
   async findAllExpenses(
     @Query() queryFilterDto: QueryFilterDto,
     @Req() req: Request,
   ) {
-    const userId = req.user['id'];
+    const userId = (req.user as { id: number }).id;
     return this.expenseService.findAllExpenses(
       userId,
       queryFilterDto.filter,
@@ -51,7 +52,7 @@ export class ExpenseController {
     @Param('id', ParseIntPipe) id: number,
     @Req() req: Request,
   ) {
-    const userId = req.user['id'];
+    const userId = (req.user as { id: number }).id;
     // 🔑 3. A verificação de "não encontrado" agora é feita no serviço
     return this.expenseService.findOneExpense(id, userId);
   }
@@ -62,7 +63,7 @@ export class ExpenseController {
     @Body() updateExpenseDto: UpdateExpenseDto, // Usando um DTO para consistência
     @Req() req: Request,
   ) {
-    const userId = req.user['id'];
+    const userId = (req.user as { id: number }).id;
     // A verificação de "não encontrado" também é feita no serviço
     return this.expenseService.updateExpense(id, updateExpenseDto, userId);
   }
@@ -73,7 +74,7 @@ export class ExpenseController {
     @Param('id', ParseIntPipe) id: number,
     @Req() req: Request,
   ) {
-    const userId = req.user['id'];
+    const userId = (req.user as { id: number }).id;
     // A verificação de "não encontrado" também é feita no serviço
     await this.expenseService.deleteExpense(id, userId);
     // Em uma resposta 204, geralmente não se retorna conteúdo.
