@@ -1,6 +1,9 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { LoginDto } from './dto/login.dto';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
@@ -16,9 +19,10 @@ export class AuthController {
     }
 
     @Post('login')
+    @ApiBody({ type: LoginDto})
     @HttpCode(HttpStatus.OK)
-    async login(@Body('email') email: string, @Body('password') password: string) {
-        const jwt = await this.authService.login(email, password);
+    async login(@Body() loginDto: LoginDto) {
+        const jwt = await this.authService.login(loginDto.email, loginDto.password);
         return {
             jwt
         };

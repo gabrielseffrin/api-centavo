@@ -89,9 +89,9 @@ API para a disciplina de tópicos especiais do curso de Sistemas para Internet
 ### RA2 - Implementar persistência de dados com um banco de dados relacional utilizando Prisma ou TypeORM.
 
 - [ ]  ID8: O aluno modelou corretamente os dados da aplicação, definindo entidades, suas relações e campos necessários, refletidos em um Diagrama de Entidade-Relacionamento (ERD).
-- [ ]  ID9: O aluno configurou e conectou a API a um banco de dados relacional (PostgreSQL, MySQL, etc.) utilizando Prisma ou TypeORM.
+- [X]  ID9: O aluno configurou e conectou a API a um banco de dados relacional (PostgreSQL, MySQL, etc.) utilizando Prisma ou TypeORM.
 - [ ]  ID10: O aluno criou e aplicou migrações de banco de dados para garantir a consistência dos dados entre desenvolvimento e produção.
-- [ ]  ID11: O aluno implementou corretamente as operações CRUD (Create, Read, Update, Delete) para pelo menos uma entidade no projeto, utilizando NestJS.
+- [X]  ID11: O aluno implementou corretamente as operações CRUD (Create, Read, Update, Delete) para pelo menos uma entidade no projeto, utilizando NestJS.
 
 ### RA3 - Realizar testes automatizados para garantir a qualidade da API.
 
@@ -108,8 +108,8 @@ API para a disciplina de tópicos especiais do curso de Sistemas para Internet
 
 ### RA5 - Implementar autenticação, autorização e segurança em APIs utilizando JWT, Guards, Middleware e Interceptadores.
 
-- [ ]  ID19: O aluno configurou a autenticação na API utilizando JWT (JSON Web Tokens).
-- [ ]  ID20: O aluno implementou controle de acesso baseado em roles e níveis de permissão, utilizando Guards para verificar permissões em rotas específicas.
+- [X]  ID19: O aluno configurou a autenticação na API utilizando JWT (JSON Web Tokens).
+- [X]  ID20: O aluno implementou controle de acesso baseado em roles e níveis de permissão, utilizando Guards para verificar permissões em rotas específicas.
 - [ ]  ID21: O aluno configurou e utilizou middleware para manipular requisições antes que elas chegassem aos controladores, realizando tarefas como autenticação, logging ou tratamento de CORS.
 - [ ]  ID22: O aluno implementou interceptadores para realizar logging ou modificar as respostas antes de enviá-las ao cliente.
 
