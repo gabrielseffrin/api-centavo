@@ -17,24 +17,31 @@ import { ExpenseService } from './expense.service';
 import { CreateExpenseDto, QueryFilterDto, UpdateExpenseDto } from './dto/expense.dto'; // Recomendado adicionar UpdateExpenseDto
 import { AuthGuard } from '@nestjs/passport'; // Assumindo que você usa o guardião de JWT
 import { Request } from 'express'; // Tipagem para o objeto de requisição
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-// 🔑 1. Protege todas as rotas do controller com o guardião de autenticação
+@ApiTags('expense')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt')) 
 @Controller('expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
-  // 🔑 2. Recebe a requisição para extrair o ID do usuário
+  @ApiOperation({ summary: 'Criar uma nova despesa' })
+  @ApiResponse({ status: 201, description: 'Despesa criada com sucesso.' })
+  @ApiResponse({ status: 400, description: 'Dados inválidos.' })
+  @ApiResponse({ status: 401, description: 'Não autorizado.' })
   @Post()
   @HttpCode(201)
   async createExpense(@Body() createExpenseDto: CreateExpenseDto, @Req() req: Request) {
-    // Extrai o userId do payload do JWT (populado pelo AuthGuard)
     const userId = (req.user as { id: number }).id; 
     return this.expenseService.createExpense(createExpenseDto, userId);
   }
 
+  @ApiOperation({ summary: 'Listar todas as despesas' })
+  @ApiResponse({ status: 200, description: 'Lista de despesas retornada com sucesso.' })
+  @ApiResponse({ status: 401, description: 'Não autorizado.' })
   @Get()
-  @UseGuards(AuthGuard('jwt')) // Protege a rota de listagem de despesas
+  @UseGuards(AuthGuard('jwt'))
   async findAllExpenses(
     @Query() queryFilterDto: QueryFilterDto,
     @Req() req: Request,
@@ -47,6 +54,9 @@ export class ExpenseController {
     );
   }
 
+  @ApiOperation({ summary: 'Buscar uma despesa específica' })
+  @ApiResponse({ status: 200, description: 'Despesa encontrada com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Get(':id')
   async findOneExpense(
     @Param('id', ParseIntPipe) id: number,
@@ -57,6 +67,9 @@ export class ExpenseController {
     return this.expenseService.findOneExpense(id, userId);
   }
 
+  @ApiOperation({ summary: 'Atualizar uma despesa específica' })
+  @ApiResponse({ status: 200, description: 'Despesa atualizada com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Put(':id')
   async updateExpense(
     @Param('id', ParseIntPipe) id: number,
@@ -68,6 +81,9 @@ export class ExpenseController {
     return this.expenseService.updateExpense(id, updateExpenseDto, userId);
   }
 
+  @ApiOperation({ summary: 'Excluir uma despesa específica' })
+  @ApiResponse({ status: 204, description: 'Despesa excluída com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Delete(':id')
   @HttpCode(204)
   async deleteExpense(
@@ -75,8 +91,6 @@ export class ExpenseController {
     @Req() req: Request,
   ) {
     const userId = (req.user as { id: number }).id;
-    // A verificação de "não encontrado" também é feita no serviço
     await this.expenseService.deleteExpense(id, userId);
-    // Em uma resposta 204, geralmente não se retorna conteúdo.
-  }
+    }
 }

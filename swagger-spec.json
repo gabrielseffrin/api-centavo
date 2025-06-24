@@ -1,0 +1,363 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/expense": {
+      "post": {
+        "operationId": "ExpenseController_createExpense",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExpenseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Despesa criada com sucesso."
+          },
+          "400": {
+            "description": "Dados inválidos."
+          },
+          "401": {
+            "description": "Não autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Criar uma nova despesa",
+        "tags": [
+          "expense"
+        ]
+      },
+      "get": {
+        "operationId": "ExpenseController_findAllExpenses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de despesas retornada com sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Listar todas as despesas",
+        "tags": [
+          "expense"
+        ]
+      }
+    },
+    "/expense/{id}": {
+      "get": {
+        "operationId": "ExpenseController_findOneExpense",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Despesa encontrada com sucesso."
+          },
+          "404": {
+            "description": "Despesa não encontrada."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Buscar uma despesa específica",
+        "tags": [
+          "expense"
+        ]
+      },
+      "put": {
+        "operationId": "ExpenseController_updateExpense",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExpenseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Despesa atualizada com sucesso."
+          },
+          "404": {
+            "description": "Despesa não encontrada."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualizar uma despesa específica",
+        "tags": [
+          "expense"
+        ]
+      },
+      "delete": {
+        "operationId": "ExpenseController_deleteExpense",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Despesa excluída com sucesso."
+          },
+          "404": {
+            "description": "Despesa não encontrada."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Excluir uma despesa específica",
+        "tags": [
+          "expense"
+        ]
+      }
+    },
+    "/errors/not-found/{id}": {
+      "get": {
+        "operationId": "ErrorsController_getNotFound",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "errors"
+        ]
+      }
+    },
+    "/errors/bad-request": {
+      "get": {
+        "operationId": "ErrorsController_getBadRequest",
+        "parameters": [
+          {
+            "name": "value",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "errors"
+        ]
+      }
+    },
+    "/errors/forbidden": {
+      "get": {
+        "operationId": "ErrorsController_getForbidden",
+        "parameters": [
+          {
+            "name": "admin",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "errors"
+        ]
+      }
+    },
+    "/errors/http-exception-simple": {
+      "get": {
+        "operationId": "ErrorsController_throwHttpExceptionSimple",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "errors"
+        ]
+      }
+    },
+    "/errors/custom-error": {
+      "get": {
+        "operationId": "ErrorsController_throwCustomError",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "errors"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Centavo",
+    "description": "API for Centavo",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "centavo",
+      "description": ""
+    },
+    {
+      "name": "users",
+      "description": ""
+    },
+    {
+      "name": "auth",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateExpenseDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateExpenseDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "joao@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      }
+    }
+  }
+}

@@ -10,7 +10,9 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { CustomException } from './exceptions/custom.exception';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('errors')
 @Controller('errors')
 export class ErrorsController {
   @Get('not-found/:id')
