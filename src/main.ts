@@ -5,6 +5,7 @@ import { HttpExceptionFilter } from './http-exception/http-exception.filter';
 import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { write, writeFileSync } from 'fs';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 async function apiCentavo() {
   const app = await NestFactory.create(AppModule);
@@ -29,13 +30,12 @@ async function apiCentavo() {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors( new ResponseInterceptor());
 
   await app.listen(process.env.PORT ?? 3000);
 }
