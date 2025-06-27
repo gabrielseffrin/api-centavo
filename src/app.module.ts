@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SharedModule } from './shared/shared.module'; 
@@ -10,7 +11,11 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
-  imports: [SharedModule, CoreModule, ExpenseModule, ErrorsModule, PrismaModule, AuthModule],
+  imports: [ConfigModule.forRoot(
+    {isGlobal: true
+
+    }),
+    SharedModule, CoreModule, ExpenseModule, ErrorsModule, PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
