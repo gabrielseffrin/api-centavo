@@ -11,7 +11,8 @@ import {
   Query,
   // --- NOVOS IMPORTS ---
   UseGuards, // Para proteger as rotas
-  Req,         // Para acessar o objeto de requisição
+  Req,
+  Version,         // Para acessar o objeto de requisição
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { CreateExpenseDto, QueryFilterDto, UpdateExpenseDto } from './dto/expense.dto'; // Recomendado adicionar UpdateExpenseDto
@@ -31,6 +32,7 @@ export class ExpenseController {
   @ApiResponse({ status: 400, description: 'Dados inválidos.' })
   @ApiResponse({ status: 401, description: 'Não autorizado.' })
   @Post()
+  @Version('1') 
   @HttpCode(201)
   async createExpense(@Body() createExpenseDto: CreateExpenseDto, @Req() req: Request) {
     const userId = (req.user as { id: number }).id; 
@@ -41,6 +43,7 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Lista de despesas retornada com sucesso.' })
   @ApiResponse({ status: 401, description: 'Não autorizado.' })
   @Get()
+  @Version('1') 
   @UseGuards(AuthGuard('jwt'))
   async findAllExpenses(
     @Query() queryFilterDto: QueryFilterDto,
@@ -58,6 +61,7 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Despesa encontrada com sucesso.' })
   @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Get(':id')
+  @Version('1') 
   async findOneExpense(
     @Param('id', ParseIntPipe) id: number,
     @Req() req: Request,
@@ -71,6 +75,7 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Despesa atualizada com sucesso.' })
   @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Put(':id')
+  @Version('1') 
   async updateExpense(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateExpenseDto: UpdateExpenseDto, // Usando um DTO para consistência
@@ -85,6 +90,7 @@ export class ExpenseController {
   @ApiResponse({ status: 204, description: 'Despesa excluída com sucesso.' })
   @ApiResponse({ status: 404, description: 'Despesa não encontrada.' })
   @Delete(':id')
+  @Version('1') 
   @HttpCode(204)
   async deleteExpense(
     @Param('id', ParseIntPipe) id: number,
