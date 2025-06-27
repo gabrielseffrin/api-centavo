@@ -37,3 +37,10 @@ model Expense {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
 }
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./erd/ERD.svg"
+  format   = "svg"
+}
+
